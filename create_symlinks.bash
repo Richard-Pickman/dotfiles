@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-mkdir ~/.config
-ln -s ~/dotfiles/bash/.bashrc ~/.bashrc
-ln -s ~/dotfiles/nvim ~/.config/nvim
-ln -s ~/dotfiles/terminator/ ~/.config/terminator
+if ! ln -s ~/dotfiles/bash/.bashrc ~/.bashrc; then
+  echo "Unable to create .bashrc symlink"
+fi
+
+if ! ln -s ~/dotfiles/nvim ~/.config/nvim; then
+  echo "Unable to create nvim symlink"
+fi
+
+if ! ln -s ~/dotfiles/terminator/ ~/.config/terminator; then
+  echo "Unable to create terminator symlink"
+fi
