@@ -1,0 +1,3 @@
+The presence of this file in ~/configuration stops the scripts from attempting to pull from github and executing the cloning scripts.
+
+This is likely not needed if everything is configured correctly, but mistakes could overwrite the master configuration files.
