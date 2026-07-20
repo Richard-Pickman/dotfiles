@@ -1,3 +1,2 @@
-base="$HOME/configuration"
+base="$HOME/terminal_configuration"
 master_file="master_system"
-
