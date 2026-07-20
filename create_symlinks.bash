@@ -10,16 +10,33 @@ source "constants"
 #	echo "This does not appear to be the master system. Installing configuration files."
 #fi
 
-if ! ln -s "$base/bashrc" "$HOME/.bashrc"; then
-  echo "$HOME/.bashrc already exists. Either remove or rename it."
-  exit 1
-else
-  echo "$HOME/.bashrc linked to $base/bashrc"
-fi
+symlink_setup() {
+  base_file=$1
+  link_file=$2
+  if [[ -f "$link_file" ]] || [[ -d "$link_file" ]] || [[ -L "$link_file" ]]; then
+    if [[ -L "$link_file" ]]; then
+      if [[ $(readlink "$link_file") == "$base_file" ]]; then
+        echo "$link_file exists and is linked to: $base_file"
+        return
+      else
+        echo "$link_file exists but is not linked to: $base_file"
+        echo "$link_file is linked to $(readlink $link_file)"
+        exit 1
+      fi
+    else
+      echo "$link_file exists but is not a symlink"
+      exit 1
+    fi
+  fi
+  echo "attempting to create: $link_file"
+  if ! ln -s "$base_file" "$link_file"; then
+    echo "Unable to create $link_file!"
+    exit 1
+  fi
+  if [[ $(readlink "$link_file") == "$base_file" ]]; then
+    echo "$link_file created and is linked to $base_file"
+  fi
+}
 
-if ! ln -s "$base/nvim" "$HOME/.config/nvim"; then
-  echo "remove or rename nvim symlink"
-  exit 1
-else
-  echo "$HOME/.config/nvim linked to $base/nvim"
-fi
+symlink_setup "$base/bashrc" "$HOME/.bashrc"
+symlink_setup "$base/nvim" "$HOME/.config/nvim"

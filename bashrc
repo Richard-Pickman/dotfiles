@@ -11,7 +11,6 @@ alias ls='ls --color=auto'
 alias b='cd ..;pwd'
 alias type='type -a'
 alias code='code --disable-gpu'
-alias cdd='cd ~/programming/javascript/dungeon'
 
 /home/jason/bin/calendar.py
 set -o vi
